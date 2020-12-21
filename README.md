@@ -45,9 +45,9 @@ We are working with three tidyverse packages in this lab.
 [`ggplot2`](https://ggplot2.tidyverse.org/) "is a system for declaratively creating graphics, based on The Grammar of Graphics. You provide the data, tell ggplot2 how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details."
 Load in the following datasets:
 ```R
-UBSprices <- read.csv("https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/UBSprices.csv", as.is = TRUE)
-polls <- read.csv("https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/rcp-polls.csv", na.strings = "--", as.is = TRUE)
-airlines <- read.csv("https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/airline-safety.csv", as.is = TRUE)
+UBSprices <- read.csv("https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/data/UBSprices.csv", as.is = TRUE)
+polls <- read.csv("https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/data/rcp-polls.csv", na.strings = "--", as.is = TRUE)
+airlines <- read.csv("https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/data/airline-safety.csv", as.is = TRUE)
 ```
 
 # What is Tidy Data?
@@ -392,14 +392,14 @@ The [tidyr vignette](https://cran.r-project.org/web/packages/tidyr/vignettes/tid
 
 Question 3:
 
-The file under5mortality.csv (available at the url “https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/under5mortality.csv”) contains the child mortality rate per 1,000 children born for each country from 1800 to 2015. (Source: https://www.gapminder.org/data/)
+The file under5mortality.csv (available at the url “https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/data/under5mortality.csv”) contains the child mortality rate per 1,000 children born for each country from 1800 to 2015. (Source: https://www.gapminder.org/data/)
 
     Briefly describe why it is not considered to be tidy data and what changes need to be made to tidy it.
     Use gather to create a tidy data set with columns country, year and mortality. Use parse_number to ensure that the year column is numeric. (Hint: you can change the column names of a data.frame object using the colnames function. For example, the code colnames(mydata)[1] <- "newName" will change the name of the first column to “newName”)
 
 Question 4:
 
-The file HospitalAdmits.csv (available at the url “https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/HospitalAdmits.csv”) describes the general reasons for people being hospitalized in the financial years ranging from July 1993 to June 1998. The variable “Separations” describes how many patient discharges occured in that year, while the variable “PatientDays” describes how many days in total patients spent in the hospital for that reason.
+The file HospitalAdmits.csv (available at the url “https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/data/HospitalAdmits.csv”) describes the general reasons for people being hospitalized in the financial years ranging from July 1993 to June 1998. The variable “Separations” describes how many patient discharges occured in that year, while the variable “PatientDays” describes how many days in total patients spent in the hospital for that reason.
 
     Briefly explain why it is not considered to be tidy data and what changes need to be made to tidy it.
     Use gather and separate to create a tidy data set with columns IcdCode, IcdText, Year, Field, and Count. The IcdCode is the numeric component of IcdChapter (Hint: pay attention to variable types, you might need to coerce factor variables into character variables using the as.character function, and then convert the result to numeric using the as.numeric function)
