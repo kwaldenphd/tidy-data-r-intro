@@ -13,43 +13,6 @@ This lab procedure is adapted from and based on Ryan Miller's ["Introduction to 
 
 # Table of Contents
 
-# Data and Environment Setup
-
-Make sure that the following packages are installed and loaded:
-```R
-#install.packages("tidyr")
-#install.packages("ggplot2")
-#install.packages("readr")
-library(tidyr)     # contains tools to tidy data
-library(ggplot2)   # for plotting
-library(readr)     # a package for parsing data
-```
-
-These packages are part of what is known as "the Tidyverse," in the RStudio user community.
-
-According to https://www.tidyverse.org/, "the tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures."
-
-To install and load all packages that are part of the `tidyverse` core, you can install the parent `tidyverse` package.
-```R
-install.package("tidyverse")
-library(tidyverse)
-```
-As of December 2020, the tidyverse core incldues the following packages: `ggplot2`, `dplyr`, `tidyr`, `readr`, `purrr`, `tibble`, `stringr`, `forcats`.
-
-We are working with three tidyverse packages in this lab.
-
-[`reader`](https://readr.tidyverse.org/) "provides a fast and friendly way to read rectangular data (like csv, tsv, and fwf). It is designed to flexibly parse many types of data found in the wild, while still cleanly failing when data unexpectedly changes"
-
-[`tidyr`](https://tidyr.tidyverse.org/) "provides a set of functions that help you get to tidy data"
-
-[`ggplot2`](https://ggplot2.tidyverse.org/) "is a system for declaratively creating graphics, based on The Grammar of Graphics. You provide the data, tell ggplot2 how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details."
-Load in the following datasets:
-```R
-UBSprices <- read.csv("https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/data/UBSprices.csv", as.is = TRUE)
-polls <- read.csv("https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/data/rcp-polls.csv", na.strings = "--", as.is = TRUE)
-airlines <- read.csv("https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/data/airline-safety.csv", as.is = TRUE)
-```
-
 # What is Tidy Data?
 
 Hadley Wickham's 2014 article in the *Journal of Statistical Software* outlines the foundations and principles of tidy data. 
@@ -178,6 +141,42 @@ Command | Meaning
 `spread` | creates multiple columns from two columns
 `separate` | splits compound variables into individual columns
 
+# Data and Environment Setup
+
+Make sure that the following packages are installed and loaded:
+```R
+#install.packages("tidyr")
+#install.packages("ggplot2")
+#install.packages("readr")
+library(tidyr)     # contains tools to tidy data
+library(ggplot2)   # for plotting
+library(readr)     # a package for parsing data
+```
+
+These packages are part of what is known as "the Tidyverse," in the RStudio user community.
+
+According to https://www.tidyverse.org/, "the tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures."
+
+To install and load all packages that are part of the `tidyverse` core, you can install the parent `tidyverse` package.
+```R
+install.package("tidyverse")
+library(tidyverse)
+```
+As of December 2020, the tidyverse core incldues the following packages: `ggplot2`, `dplyr`, `tidyr`, `readr`, `purrr`, `tibble`, `stringr`, `forcats`.
+
+We are working with three tidyverse packages in this lab.
+
+[`reader`](https://readr.tidyverse.org/) "provides a fast and friendly way to read rectangular data (like csv, tsv, and fwf). It is designed to flexibly parse many types of data found in the wild, while still cleanly failing when data unexpectedly changes"
+
+[`tidyr`](https://tidyr.tidyverse.org/) "provides a set of functions that help you get to tidy data"
+
+[`ggplot2`](https://ggplot2.tidyverse.org/) "is a system for declaratively creating graphics, based on The Grammar of Graphics. You provide the data, tell ggplot2 how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details."
+Load in the following datasets:
+```R
+UBSprices <- read.csv("https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/data/UBSprices.csv", as.is = TRUE)
+polls <- read.csv("https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/data/rcp-polls.csv", na.strings = "--", as.is = TRUE)
+airlines <- read.csv("https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/data/airline-safety.csv", as.is = TRUE)
+```
 # Tidying Longitudinal Data Using `gather`
 
 UBS is an international bank that reports prices of various staples in major cities every three years. 
