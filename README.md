@@ -171,12 +171,16 @@ We are working with three tidyverse packages in this lab.
 [`tidyr`](https://tidyr.tidyverse.org/) "provides a set of functions that help you get to tidy data"
 
 [`ggplot2`](https://ggplot2.tidyverse.org/) "is a system for declaratively creating graphics, based on The Grammar of Graphics. You provide the data, tell ggplot2 how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details."
+
 Load in the following datasets:
 ```R
 UBSprices <- read.csv("https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/data/UBSprices.csv", as.is = TRUE)
 polls <- read.csv("https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/data/rcp-polls.csv", na.strings = "--", as.is = TRUE)
 airlines <- read.csv("https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/data/airline-safety.csv", as.is = TRUE)
 ```
+
+Google Drive link if needed: https://drive.google.com/drive/folders/1hOV-0vVsPbHs7RF9OJQzbFtSRy-wvYIs?usp=sharing
+
 # Tidying Longitudinal Data Using `gather`
 
 UBS is an international bank that reports prices of various staples in major cities every three years. 
