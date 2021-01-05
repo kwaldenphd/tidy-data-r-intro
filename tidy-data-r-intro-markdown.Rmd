@@ -1,0 +1,296 @@
+---
+title: "tidy-data-r-intro-markdown"
+author: "K. Walden"
+date: "1/4/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Data and Environment Setup
+
+26. Make sure that the following packages are installed and loaded:
+```{r}
+#install.packages("tidyr")
+#install.packages("ggplot2")
+#install.packages("readr")
+library(tidyr)     # contains tools to tidy data
+library(ggplot2)   # for plotting
+library(readr)     # a package for parsing data
+```
+
+27. These packages are part of what is known as "the Tidyverse," in the RStudio user community.
+
+28. According to https://www.tidyverse.org/, "the tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures."
+
+29. To install and load all packages that are part of the `tidyverse` core, you can install the parent `tidyverse` package.
+```{r}
+# install.package("tidyverse")
+library(tidyverse)
+```
+30. As of December 2020, the tidyverse core incldues the following packages: `ggplot2`, `dplyr`, `tidyr`, `readr`, `purrr`, `tibble`, `stringr`, `forcats`.
+
+31. We are working with three tidyverse packages in this lab.
+
+32. [`reader`](https://readr.tidyverse.org/) "provides a fast and friendly way to read rectangular data (like csv, tsv, and fwf). It is designed to flexibly parse many types of data found in the wild, while still cleanly failing when data unexpectedly changes"
+
+33. [`tidyr`](https://tidyr.tidyverse.org/) "provides a set of functions that help you get to tidy data"
+
+34. [`ggplot2`](https://ggplot2.tidyverse.org/) "is a system for declaratively creating graphics, based on The Grammar of Graphics. You provide the data, tell ggplot2 how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details."
+
+35. Load in the following datasets:
+```{r}
+UBSprices <- read.csv("https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/data/UBSprices.csv", as.is = TRUE)
+polls <- read.csv("https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/data/rcp-polls.csv", na.strings = "--", as.is = TRUE)
+airlines <- read.csv("https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/data/airline-safety.csv", as.is = TRUE)
+```
+
+36. [Google Drive link if needed (ND users only)](https://drive.google.com/drive/folders/1hOV-0vVsPbHs7RF9OJQzbFtSRy-wvYIs?usp=sharing)
+
+# Case Studies
+
+## Tidying Longitudinal Data Using `gather`
+
+37. UBS is an international bank that reports prices of various staples in major cities every three years. 
+
+38. The data set in UBSprices data set contains prices of a 1 kg bag of rice in the years 2003 and 2009 in major world cities. 
+
+39. The data set was originally extracted from the `alr4` R package.
+
+40. We can get header information about the `USBprices` dataset.
+```{r}
+head(UBSprices)
+```
+
+41. This data set is not tidy because each row contains two cases: the city in 2003 and the city in 2009. 
+
+42. Additionally, the column names `2003` and `2009` contain the year, which should be the value of a variable. 
+
+43. In order to tidy these data, we need to:
+  i. Reorganize the data so that each row corresponds to a city in a specific year
+  ii. Create a single variable for the price of rice
+  iii. Add a variable for year
+
+44. To do this, we will use the `gather` function in the `tidyr` package. 
+
+45. `gather` collapses multiple columns into two columns: a key column and a value column. 
+
+46. The key will be the new variable containing the old column names and the value will contain the information recorded in the cells of the collapsed columns.
+
+47. In our example, we want to collapse `rice2003` and `rice2009` into the key-value pair `year` and `price`. 
+
+48. To do this, we use the following command:
+```{r}
+tidy_ubs <- gather(data = UBSprices, key = year, value = price, rice2003, rice2009)
+head(tidy_ubs)
+```
+
+49. The first argument passed to `gather` should be the name of the data frame that is being tidied.
+
+50. This syntax is true for all `tidyr` functions covered in this lab.
+
+51. After specifying the data frame, the next two arguments specify the column names for the two new columns you are creating.
+
+52. One column is called the key and the other is called the values.
+- For those familiar with Python, this is similar to a dictionary's key-value pairs
+
+53. After the first three arguments, specify the columns that you wish to collapse, separated by commas. 
+
+54. Notice that the original column names are now listed in the key column and the original cell values are now all in one column.
+
+
+Q2: Write code (with comments) that answers the following questions:
+- How are the number of rows adjusted by using the gather command? (Hint: Use dim(UBSprices) to determine how many rows are in the UBSprices data set and dim(tidy_ubs) to determine how many are in the tidy_ubs data set).
+- How many rows would there be after using the gather command if the UBSprices data set had five columns of years: rice2003, rice2006, rice2009, rice2012, and rice2015?
+
+55. To finish tidying these data, we need to modify the year column by removing the word “rice” from each cell.
+
+56. To do this, we can use the `parse_number` function in the readr package. 
+
+57. This function drops any non-numeric characters in a character string.
+```{r}
+tidy_ubs$year <- parse_number(tidy_ubs$year)
+head(tidy_ubs)
+```
+
+58. We now have a dataset that follows tidy data principles.
+
+59. This data set started in a relatively tidy form, so why bother with tidying it?
+
+60. Tidy data are typically required for summarizing and plotting data in `R`. 
+
+61. For example, consider making a side-by-side boxplot using `ggplot` (we will learn more about `ggplot` in a future lab).
+```{r}
+qplot(data=tidy_ubs, x= factor(year), y=price, geom="boxplot")
+```
+
+62. This was straightforward since `tidy_ubs` was already tidy, but would have required extra manipulation in the original format.
+
+## Tidying Pollster Data Using `separate` and `gather`
+
+63. The polls data set contains the results of various presidential polls conducted during July 2016, and was scraped from [RealClear Politics](http://www.realclearpolitics.com/epolls/latest_polls/president/).
+
+```{r}
+polls
+```
+
+64. This dataset does not follow tidy data principles.
+
+65. The `Date` column contains both the beginning and end dates. These should be stored in separate columns.
+
+66. The `Sample` column contains two variables: the number of people in the sample and the population that was sampled (likely voters or registered voters). These should be stored in separate columns.
+
+67. The last four column names are values of candidate and party variables, which should be stored in their own columns.
+
+68. To break a single character column into multiple new columns we use the `separate` function in the `tidyr` package.
+
+69. To begin, let’s break the `Date` column into `Begin` and `End` columns:
+
+```{r}
+tidy_polls <- separate(data = polls, col = Date, into = c("Begin", "End"), sep = " - ")
+tidy_polls
+```
+
+70. The second argument `col` specifies the name of the column to be split.
+
+71. The third argument `into` specifies the names of the new columns. Note that since these are specific column names we are creating, they should be given in quotes.
+
+72. `R` will try to guess how the values should be separated by searching for non-alphanumeric values; however, if there are multiple non-alphanumeric values this may fail. 
+
+73. In this example, if we did not specify that `sep = " - "`, then `R` would erroneously use `\` as the separator. 
+
+74. To manually specify the separator between columns we can place the character(s) in quotes.
+
+75. In `sep = " - "`, the spaces around `-` avoid excess whitespace in the resulting cell values.
+
+76. We also need to separate the `Sample` column into `size` and `population` columns.
+```{r}
+tidy_polls <- separate(data = tidy_polls, col = Sample, into = c("size", "population"), sep = " ")
+tidy_polls
+```
+
+77. Next, we need to gather the last four columns into a `candidate` variable.
+```{r}
+tidy_polls <- gather(data = tidy_polls, key = candidate, value = percentage, 7:10)
+head(tidy_polls)
+```
+
+78. Notice that instead of writing out the column names (Clinton..D., Trump..R., etc.) we can simply specify the column numbers.
+
+79. `7:10` specifies that we are gathering columns 7 through 10.
+
+80. Finally, we need to separate the candidate names from the political party.
+```{r}
+tidy_polls <- separate(tidy_polls, candidate, into= c("candidate", "party"))
+head(tidy_polls)
+```
+
+81. In the last command we let `R` guess which separator to use. 
+
+82. This worked, but resulted in a warning message—we’re lucky that it worked! 
+
+83. There are many situations where the separator is too complex for `R` to guess correctly and it cannot be specified using a simple character in quotes. 
+
+84. In such cases we need to use regular expressions to aid our data tidying, but that’s a topic for another tutorial. 
+
+85. The important thing to note here is that you should always check that `separate` worked as expected. 
+
+86. When in doubt, check your output!
+
+## Tidying Crash Data Using `gather` + `separate` + `spread`
+
+87. The airlines data set contains the raw data behind the 2014 Nate Silver article ["Should Travelers Avoid Flying Airlines That Have Had Crashes in the Past?"](http://fivethirtyeight.com/features/should-travelers-avoid-flying-airlines-that-have-had-crashes-in-the-past/) that appeared on [fivethirtyeight.com](https://fivethirtyeight.com).
+
+88. We can get some basic information about this dataset.
+```{r}
+head(airlines)
+dim(airlines)
+```
+
+89. In this example, a `case` is best described as an airline in a specific time frame.
+
+90. So these data are not tidy because each case is not its own row. 
+
+91. Additionally, the last six column names contain the time frame, which is a value. 
+
+92. To be tidy, this dataset needs to:
+- have rows corresponding to airlines in a specific time frame
+- create a `years` column to specify the time frame
+- create columns for each type of accident: `incidents`, `fatal_accidents`, and `fatalities`
+
+93. First, we gather the last six columns into a common accidents column. 
+
+94. This will allow us to easily create the years column.
+```{r}
+tidy_airlines <- gather(airlines, key = accidents, value = count, 3:8)
+head(tidy_airlines)
+```
+
+95. Next, we separate the values of the new accidents column into `var` (short for variable) and `years`. 
+
+96. The default guessing scheme fails here, so we must specify `sep = "[.]"` to denote that the period is the separator. 
+
+```{r}
+tidy_airlines <- separate(tidy_airlines, accidents, into = c("var", "years"), sep = "[.]")
+head(tidy_airlines)
+```
+
+97. To learn more about regular expressions in `RStudio`, check out [the RegEx Cheatsheet](https://rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf).
+
+98. Finally, we need to ensure that each row corresponds to a case. (Don’t worry, this will also make each column a variable!) 
+
+99. Currently, there are six rows for each airline: one for each var in each time frame. 
+
+100. To solve this problem, we need to spread out the var column so that each variable has its own column.
+```{r}
+tidy_airlines <- spread(data = tidy_airlines, key = var, value = count)
+head(tidy_airlines)
+```
+
+101. Notice that the first argument given to spread is the data frame, followed by the key-value pair. 
+
+102. The key is the name of the column whose values will be used as column headings and the value is the name of the column whose values will populate the cells of the new columns. 
+
+103. In this example, we use `var` as the key and populate the cells with the `count`.
+
+# Additional Resources
+
+104. [RStudio’s data wrangling cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) provides a nice summary of how to reshape data sets and a quick reminder of the definition of tidy data.
+
+105. The [tidyr vignette](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) provides additional examples and elaborates on the capabilities of the tidyr package.
+
+# Additional Questions
+
+Q3: The file under5mortality.csv (available at https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/data/under5mortality.csv) contains the child mortality rate per 1,000 children born for each country from 1800 to 2015. (Source: https://www.gapminder.org/data/)
+- Briefly describe why it is not considered to be tidy data and what changes need to be made to tidy it.
+- Use `gather` to create a tidy data set with columns `country`, `year` and `mortality`. Use `parse_number` to ensure that the year column is numeric. 
+  * Hint: you can change the column names of a data.frame object using the `colnames` function. 
+  * For example, the code `colnames(mydata)[1] <- "newName"` will change the name of the first column to `“newName”`
+
+Q4: The file HospitalAdmits.csv (available at https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/data/HospitalAdmits.csv) describes the general reasons for people being hospitalized in the financial years ranging from July 1993 to June 1998. The variable `Separations` describes how many patient discharges occured in that year, while the variable `PatientDays` describes how many days in total patients spent in the hospital for that reason.
+- Briefly explain why it is not considered to be tidy data and what changes need to be made to tidy it.
+- Use `gather` and `separate` to create a tidy data set with columns `IcdCode`, `IcdText`, `Year`, `Field`, and `Count`. 
+- The `IcdCode` is the numeric component of `IcdChapter`
+  * Hint: pay attention to variable types, you might need to coerce factor variables into character variables using the `as.character` function, and then convert the result to numeric using the `as.numeric` function
+
+# Lab Notebook Questions
+
+Q1: What questions do you have about these principles? Which ones are unclear are confusing?
+
+Q2: Write code (with comments) that answers the following questions:
+- How are the number of rows adjusted by using the gather command? (Hint: Use dim(UBSprices) to determine how many rows are in the UBSprices data set and dim(tidy_ubs) to determine how many are in the tidy_ubs data set).
+- How many rows would there be after using the gather command if the UBSprices data set had five columns of years: rice2003, rice2006, rice2009, rice2012, and rice2015?
+
+Q3: The file under5mortality.csv (available at https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/data/under5mortality.csv) contains the child mortality rate per 1,000 children born for each country from 1800 to 2015. (Source: https://www.gapminder.org/data/)
+- Briefly describe why it is not considered to be tidy data and what changes need to be made to tidy it.
+- Use `gather` to create a tidy data set with columns `country`, `year` and `mortality`. Use `parse_number` to ensure that the year column is numeric. 
+  * Hint: you can change the column names of a data.frame object using the `colnames` function. 
+  * For example, the code `colnames(mydata)[1] <- "newName"` will change the name of the first column to `“newName”`
+
+Q4: The file HospitalAdmits.csv (available at https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/data/HospitalAdmits.csv) describes the general reasons for people being hospitalized in the financial years ranging from July 1993 to June 1998. The variable `Separations` describes how many patient discharges occured in that year, while the variable `PatientDays` describes how many days in total patients spent in the hospital for that reason.
+- Briefly explain why it is not considered to be tidy data and what changes need to be made to tidy it.
+- Use `gather` and `separate` to create a tidy data set with columns `IcdCode`, `IcdText`, `Year`, `Field`, and `Count`. 
+- The `IcdCode` is the numeric component of `IcdChapter`
+  * Hint: pay attention to variable types, you might need to coerce factor variables into character variables using the `as.character` function, and then convert the result to numeric using the `as.numeric` function
