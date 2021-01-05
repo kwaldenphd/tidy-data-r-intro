@@ -29,6 +29,9 @@ This lab procedure is adapted from and based on Ryan Miller's ["Introduction to 
 - [Additional Questions](#additional-questions)
 - [Lab Notebook Questions](#lab-notebook-questions)
 
+
+[Click here](https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/tidy-data-r-intro-markdown.Rmd) and select the "Save As" option to download this lab as an RMarkdown file.
+
 # Overview
 
 1. Hadley Wickham's 2014 article in the *Journal of Statistical Software* outlines the foundations and principles of tidy data. 
