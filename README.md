@@ -16,7 +16,6 @@ This lab procedure is adapted from and based on Ryan Miller's ["Introduction to 
 - [Overview](#overview)
   * [Tidy Data Principles](#tidy-data-principles)
   * [Common Spreadsheet Errors](#common-spreadsheet-errors)
-  * [Visualizing Tidy Data](#visualizing-tidy-data)
 - [Defining Tidy Data](#defining-tidy-data)
   * [Tidy Data Syntax](#tidy-data-syntax)
   * [Visualizing Tidy Data](#visualizing-tidy-data)
