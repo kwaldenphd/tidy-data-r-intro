@@ -122,11 +122,12 @@ This lab procedure is adapted from and based on Ryan Miller's ["Introduction to 
 # Defining Tidy Data
 
 21. `R` is best-suited to working with data that follows five core rules:
-  i. Every variable is stored in its own column
-  ii. Every observation is stored in its own row--that is, every row corresponds to a single case
-  iii. Each value of a variable is stored in a cell of the table
-  iv. Values should not contain units. Rather, units should be specified in the supporting documentation forthe data set, often called a codebook
-  v. There should be no extraneous information in the table (footnotes, table title, etc.)
+
+i. Every variable is stored in its own column
+ii. Every observation is stored in its own row--that is, every row corresponds to a single case
+iii. Each value of a variable is stored in a cell of the table
+iv. Values should not contain units. Rather, units should be specified in the supporting documentation forthe data set, often called a codebook
+v. There should be no extraneous information in the table (footnotes, table title, etc.)
 
 22. A dataset satisfying  these rules is said to be "tidy."
 
