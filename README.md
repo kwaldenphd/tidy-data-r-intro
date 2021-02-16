@@ -31,6 +31,10 @@ This lab procedure is adapted from and based on Ryan Miller's ["Introduction to 
 
 [Click here](https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/tidy-data-r-intro-markdown.Rmd) and select the "Save As" option to download this lab as an RMarkdown file.
 
+Lab overview videos (Panopto, ND users):
+- [Tidy Data Principles](https://notredame.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=6a08f05f-a3d5-4567-83d8-acd1003f312b) (10 minutes)
+- [RStudio Tidy Data Lab Overview](https://notredame.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=b0bc9f58-3cc4-4bb8-a8df-acd1003f30d1) (20 minutes)
+
 # Overview
 
 1. Hadley Wickham's 2014 article in the *Journal of Statistical Software* outlines the foundations and principles of tidy data. 
