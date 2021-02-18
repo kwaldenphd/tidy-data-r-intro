@@ -184,7 +184,7 @@ library(readr)     # a package for parsing data
 
 29. To install and load all packages that are part of the `tidyverse` core, you can install the parent `tidyverse` package.
 ```R
-install.package("tidyverse")
+install.packages("tidyverse")
 library(tidyverse)
 ```
 30. As of December 2020, the tidyverse core incldues the following packages: `ggplot2`, `dplyr`, `tidyr`, `readr`, `purrr`, `tibble`, `stringr`, `forcats`.
