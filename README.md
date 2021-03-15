@@ -11,6 +11,10 @@ Data sets are stored in tabular format and there are many possible ways to organ
 
 This lab procedure is adapted from and based on Ryan Miller's ["Introduction to Tidy Data in R"](https://remiller1450.github.io/s230f19/Tidy_Data.html) (Fall 2019, Intro to Data Science STA 230 course, Grinnell College).
 
+Links to lab overview videos (Panopto, ND users):
+- [Tidy data principles](https://notredame.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=10b00206-2811-4138-af9b-acd10034d5e1)
+- [Tidy data in RStudio](https://notredame.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=4753c4a6-2c49-4a33-9edc-acd100389c55)
+
 # Table of Contents
 
 - [Overview](#overview)
