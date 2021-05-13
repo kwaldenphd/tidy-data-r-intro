@@ -7,6 +7,10 @@ This tutorial is licensed under a <a href="http://creativecommons.org/licenses/b
 
 Data sets are stored in tabular format and there are many possible ways to organize tabular data. Some organizational schemes are designed to be easily read on the page (or screen), while others are designed to be easily used in analysis. In this tutorial, we focus on best practices for how a data set should be formatted for analysis in `R`.
 
+Lab overview videos (Panopto, ND users):
+- [Tidy Data Principles](https://notredame.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=6a08f05f-a3d5-4567-83d8-acd1003f312b) (10 minutes)
+- [RStudio Tidy Data Lab Overview](https://notredame.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=b0bc9f58-3cc4-4bb8-a8df-acd1003f30d1) (20 minutes)
+
 ## Acknowledgements
 
 This lab procedure is adapted from and based on Ryan Miller's ["Introduction to Tidy Data in R"](https://remiller1450.github.io/s230f19/Tidy_Data.html) (Fall 2019, Intro to Data Science STA 230 course, Grinnell College).
@@ -32,12 +36,7 @@ Links to lab overview videos (Panopto, ND users):
 - [Additional Questions](#additional-questions)
 - [Lab Notebook Questions](#lab-notebook-questions)
 
-
 [Click here](https://raw.githubusercontent.com/kwaldenphd/tidy-data-r-intro/main/tidy-data-r-intro-markdown.Rmd) and select the "Save As" option to download this lab as an RMarkdown file.
-
-Lab overview videos (Panopto, ND users):
-- [Tidy Data Principles](https://notredame.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=6a08f05f-a3d5-4567-83d8-acd1003f312b) (10 minutes)
-- [RStudio Tidy Data Lab Overview](https://notredame.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=b0bc9f58-3cc4-4bb8-a8df-acd1003f30d1) (20 minutes)
 
 # Overview
 
