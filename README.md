@@ -399,7 +399,7 @@ tidy_airlines <- separate(tidy_airlines, accidents, into = c("var", "years"), se
 head(tidy_airlines)
 ```
 
-97. To learn more about regular expressions in `RStudio`, check out [the RegEx Cheatsheet](https://rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf).
+97. To learn more about regular expressions in `RStudio`, check out [the RegEx Cheatsheet](https://github.com/rstudio/cheatsheets/blob/master/regex.pdf).
 
 98. Finally, we need to ensure that each row corresponds to a case. (Don’t worry, this will also make each column a variable!) 
 
